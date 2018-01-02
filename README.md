@@ -4,10 +4,8 @@
 
 Set PREFIX in Makefile, e.g. /usr/local, and then do the following:
 
-mkdir ./build
-
-cd build
-
-make -f ../Makefile
+1. mkdir ./build
+2. cd build
+3. make -f ../Makefile
 
 
