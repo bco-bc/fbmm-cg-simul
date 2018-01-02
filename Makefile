@@ -2,7 +2,7 @@ VPATH = ../include/bco/chromatography \
         ../src \
         ../tests
 
-PREFIX = 
+PREFIX = $(PREFIX)
 
 INCLUDE = cg.hpp \
           cg-facade.hpp
