@@ -1,17 +1,16 @@
 #ifndef CG_FACADE_HPP
 #define CG_FACADE_HPP
 
-namespace bco {
+#include "../results.hpp"
+
+namespace bco {  
 
   /**
-   * Main entrance into the simulator.
+   * Simplified interface to simulator.
    */
-  struct CgFacade {
+  class CgFacade {
     
-    /**
-     * Completes a calculation.
-     */
-    virtual void execute() = 0;
+    Results compute();
     
   };
   

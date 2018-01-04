@@ -1,13 +1,15 @@
 VPATH = ../include/bco/chromatography \
+        ../include/bco/chromatography/api \
+        ../include/bco/chromatography/api/facade \
         ../src \
         ../tests
 
-PREFIX = $(PREFIX)
+PREFIX = $(prefix)
 
 INCLUDE = cg.hpp \
           cg-facade.hpp
 
-SRC =     
+SRC =     cg-facade.cpp
 
 TESTS =  
 
