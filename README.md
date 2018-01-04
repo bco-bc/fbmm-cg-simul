@@ -1,5 +1,9 @@
 # Chromatography Simulator
 
+## Dependencies
+
+1. CppCMS — C++ Web Framework: http://cppcms.com
+
 ## Build instructions
 
 1. mkdir ./build
