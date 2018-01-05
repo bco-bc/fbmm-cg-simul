@@ -1,0 +1,21 @@
+{     
+    "service" : {   
+	"api" : "http",  
+	"port" : 8088
+    },    
+    "http" : {   
+	"script" : "/cgs"  
+    },
+    "logging" : {
+	"level" : "debug",
+	"stderr" : true,
+	"file" : {
+	    "name" : "cg-simulator.log",
+	    "append" : true
+	}
+    },
+    "info" : {
+	"version" : 0.1,
+	"copyright" : "Faculty of biochemistry and molecular medicine, University of Oulu, Finland"
+    }
+}

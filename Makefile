@@ -1,15 +1,20 @@
-VPATH = ../include/bco/chromatography \
-        ../include/bco/chromatography/api \
-        ../include/bco/chromatography/api/facade \
+VPATH = ../include/bco/cg \
+        ../include/bco/cg/api \
+        ../include/bco/cg/api/facade \
+        ../include/bco/cg/api/rest \
+        ../include/bco/cg/apps \
         ../src \
+        ../apps \
         ../tests
 
 PREFIX = $(prefix)
 
 INCLUDE = cg.hpp \
-          cg-facade.hpp
+          simulator-facade.hpp simulator-resource.hpp root-resource.hpp
 
-SRC =     cg-facade.cpp
+SRC =     simulator-facade.cpp root-resource.cpp simulator-resource.cpp
+
+APPS =	  cg-simulator.cpp
 
 TESTS =  
 
@@ -17,28 +22,30 @@ SOBJ = $(SRC:.cpp=.o)
 LOBJ = $(SRC:.cpp=.lo)
 TOBJ = $(TESTS:.cpp=.o)
 TEXE = $(TESTS:.cpp=)
+AOBJ = $(APPS:.cpp=.o)
+AEXE = $(APPS:.cpp=)
 
 CC = g++
 LT = libtool
-LNAME = libbcocg
+LNAME = bcocg
 OPT = -ggdb -pthread
 #OPT = -O3 -pthread -DNDEBUG
 
 # For g++ >= 5.4
 CFLAGS = -I../include $(OPT) -Wall -std=c++14
 LDFLAGS = -I../include $(OPT) -Wall -std=c++14 -L.
-LIBS = -lm -l$(LNAME) -lboost_program_options
+LIBS = -lm -l$(LNAME) -lcppcms -lbooster
 #LIBS = -lm -l$(LNAME) -lpthread -lboost_program_options
 #CFLAGS = -I../include $(OPT) -Wall -std=c++11
 #LDFLAGS = -I../include $(OPT) -Wall -std=c++11 -L.
 #LIBS = -lm -l$(LNAME) -lboost_program_options
 
 # All object files.
-%.o : %.cpp $(INCLUDE)
+%.o : %.cpp $(INCLUDE) $(SRC)
 	$(LT) --mode=compile $(CC) -c $(CFLAGS) $< -o $@
 
 # All executables.
-% : %.cpp $(INCLUDE)
+% : %.cpp $(INCLUDE) $(APPS)
 	$(LT) --mode=link $(CC) $(LDFLAGS) $(LIBS) $< -o $@ -rpath $(PREFIX)/bin
 
 lib : $(SOBJ)
@@ -47,7 +54,10 @@ lib : $(SOBJ)
 tests: $(TEXE)
 	echo "Done: tests"
 
-all: lib tests
+apps: $(AEXE)
+	echo "Done: apps"
+
+all: lib tests apps
 	echo "Done: all"
 
 install-tests: tests
@@ -56,7 +66,10 @@ install-tests: tests
 install-lib: lib
 	$(LT) --mode=install install lib$(LNAME).la $(PREFIX)/lib
 
-install: install-lib install-tests
+install-apps: apps 
+	$(LT) --mode=install install $(AEXE) $(PREFIX)/bin
+
+install: install-lib install-apps
 
 docs: $(INCLUDE)
 	cd ..;pwd;/usr/bin/doxygen Doxyfile;
@@ -73,6 +86,9 @@ clean-tests :
 clean-lib :
 	$(LT) --mode=clean \rm -r -f *.lo lib$(LNAME)*
 
+clean-apps :
+	$(LT) --mode=clean \rm -r -f $(AEXE)
+
 clean-doxy:
 	$(LT) --mode=clean \rm -r -f ../html/search/*
 	- $(LT) --mode=clean rmdir --verbose ../html/search
@@ -82,5 +98,5 @@ clean-doxy:
 	$(LT) --mode=clean \rm -r -f ../html/*.*
 	- $(LT) --mode=clean \rm -r -f ../html/*
 
-clean: clean-tests clean-lib clean-build clean-doxy
+clean: clean-tests clean-lib clean-apps clean-build clean-doxy
 	echo "Done: clean"
