@@ -2,7 +2,7 @@ VPATH = ../include/bco/cg \
         ../include/bco/cg/api \
         ../include/bco/cg/api/facade \
         ../include/bco/cg/api/rest \
-        ../include/bco/cg/apps \
+        ../include/bco/cg/infrastructure \
         ../src \
         ../apps \
         ../tests
@@ -10,9 +10,11 @@ VPATH = ../include/bco/cg \
 PREFIX = $(prefix)
 
 INCLUDE = cg.hpp \
-          simulator-facade.hpp simulator-resource.hpp root-resource.hpp
+          simulator-facade.hpp simulator-resource.hpp root-resource.hpp results.hpp \
+          registry.hpp
 
-SRC =     simulator-facade.cpp root-resource.cpp simulator-resource.cpp
+SRC =     simulator-facade.cpp root-resource.cpp simulator-resource.cpp results.cpp \
+          registry.cpp
 
 APPS =	  cg-simulator.cpp
 
@@ -41,11 +43,11 @@ LIBS = -lm -l$(LNAME) -lcppcms -lbooster
 #LIBS = -lm -l$(LNAME) -lboost_program_options
 
 # All object files.
-%.o : %.cpp $(INCLUDE) $(SRC)
+%.o : %.cpp $(INCLUDE)
 	$(LT) --mode=compile $(CC) -c $(CFLAGS) $< -o $@
 
 # All executables.
-% : %.cpp $(INCLUDE) $(APPS)
+% : %.cpp $(INCLUDE)
 	$(LT) --mode=link $(CC) $(LDFLAGS) $(LIBS) $< -o $@ -rpath $(PREFIX)/bin
 
 lib : $(SOBJ)

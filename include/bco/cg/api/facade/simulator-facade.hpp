@@ -8,7 +8,7 @@ namespace bco {
   /**
    * Simplified interface to simulator.
    */
-  class SimulatorFacade {
+  struct SimulatorFacade {
 
     /**
      * Performs a calculation.

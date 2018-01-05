@@ -15,9 +15,8 @@ Replace the value for prefix, if needed. Upon completion, a library 'libbcocg' i
 
 ## Running
 
-From the CLI, enter
+Using the CLI, type the following
 
-cg-simulator -c config.js
+cg-simulator -c conf/config.js
 
-Here, config.js is a JSON-based configuration file to set up the RESTful endpoint.
-
+Here, 'config.js' is a JSON-based configuration file to set up the RESTful endpoint.

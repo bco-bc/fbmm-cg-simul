@@ -1,4 +1,3 @@
-#include "bco/cg/api/rest/simulator-resource.hpp"
 #include "bco/cg/api/rest/root-resource.hpp"
 #include <cppcms/service.h>
 #include <cppcms/applications_pool.h>
@@ -11,6 +10,7 @@ using namespace bco;
 
 int main(int argc, char** argv)
 {
+  // Application name.
   const std::string appName = "cg-simulator";
   
   try {

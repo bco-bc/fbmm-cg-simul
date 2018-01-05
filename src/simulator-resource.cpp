@@ -1,13 +1,16 @@
 #include "bco/cg/api/rest/simulator-resource.hpp"
-
+#include "bco/cg/api/facade/simulator-facade.hpp"
 #include <cppcms/url_dispatcher.h>  
 #include <cppcms/url_mapper.h>
 #include <cppcms/http_response.h>  
+#include <cppcms/json.h>
 #include <booster/log.h>
 
 namespace bco {
 
-  SimulatorResource::SimulatorResource(cppcms::service &service) : cppcms::application(service)
+  SimulatorResource::SimulatorResource(cppcms::service &service,
+				       const std::shared_ptr<SimulatorFacade>& simulatorFacade) :
+    cppcms::application(service), simulatorFacade_(simulatorFacade)
   {
     dispatcher().assign("", &SimulatorResource::compute, this);  
     mapper().assign("");
@@ -18,9 +21,10 @@ namespace bco {
 
   void SimulatorResource::compute()
   {
+    Results results = simulatorFacade_->compute();
     cppcms::json::value json;
     json["status"] = "success";
-    json["data"]["something"] = "0.11";
+    json["data"] = results.toJson();
     response().content_type("application/json");
     response().out() << json;
   }
