@@ -2,8 +2,9 @@
 
 namespace bco {
 
-  Results SimulatorFacade::compute()
-  {
-    return Results();
-  }
+    Results SimulatorFacade::compute()
+    {
+	
+	return Results();
+    }
 }

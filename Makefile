@@ -5,7 +5,7 @@ VPATH = ../include/bco/cg \
         ../include/bco/cg/infrastructure \
         ../src \
         ../apps \
-        ../tests
+        ../tests \
 
 PREFIX = $(prefix)
 
@@ -14,11 +14,11 @@ INCLUDE = cg.hpp \
           registry.hpp
 
 SRC =     simulator-facade.cpp root-resource.cpp simulator-resource.cpp results.cpp \
-          registry.cpp
+          registry.cpp cg.cpp
 
 APPS =	  cg-simulator.cpp
 
-TESTS =  
+TESTS = cg-test.cpp 
 
 SOBJ = $(SRC:.cpp=.o)
 LOBJ = $(SRC:.cpp=.lo)
@@ -34,9 +34,9 @@ OPT = -ggdb -pthread
 #OPT = -O3 -pthread -DNDEBUG
 
 # For g++ >= 5.4
-CFLAGS = -I../include $(OPT) -Wall -std=c++14
-LDFLAGS = -I../include $(OPT) -Wall -std=c++14 -L.
-LIBS = -lm -l$(LNAME) -lcppcms -lbooster
+CFLAGS = -I../include -I/localdisk/lib/cppcms-1.2.1/include $(OPT) -Wall -std=c++14
+LDFLAGS = -I../include -I/localdisk/lib/cppcms-1.2.1/include $(OPT) -Wall -std=c++14 -L.
+LIBS = -lm -l$(LNAME) -L/localdisk/lib/cppcms-1.2.1/lib -lcppcms -L/localdisk/lib/cppcms-1.2.1/lib -lbooster
 #LIBS = -lm -l$(LNAME) -lpthread -lboost_program_options
 #CFLAGS = -I../include $(OPT) -Wall -std=c++11
 #LDFLAGS = -I../include $(OPT) -Wall -std=c++11 -L.
@@ -54,6 +54,7 @@ lib : $(SOBJ)
 	$(LT) --mode=link $(CC) $(CFLAGS) -o lib$(LNAME).la $(LOBJ) -rpath $(PREFIX)/lib
 
 tests: $(TEXE)
+	./cg-test
 	echo "Done: tests"
 
 apps: $(AEXE)
