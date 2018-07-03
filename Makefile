@@ -34,9 +34,9 @@ OPT = -ggdb -pthread
 #OPT = -O3 -pthread -DNDEBUG
 
 # For g++ >= 5.4
-CFLAGS = -I../include -I/localdisk/lib/cppcms-1.2.1/include $(OPT) -Wall -std=c++14
-LDFLAGS = -I../include -I/localdisk/lib/cppcms-1.2.1/include $(OPT) -Wall -std=c++14 -L.
-LIBS = -lm -l$(LNAME) -L/localdisk/lib/cppcms-1.2.1/lib -lcppcms -L/localdisk/lib/cppcms-1.2.1/lib -lbooster
+CFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14
+LDFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14 -L.
+LIBS = -lm -l$(LNAME) -L/localdisk/local/lib/ -lcppcms -L/localdisk/local/lib/ -lbooster
 #LIBS = -lm -l$(LNAME) -lpthread -lboost_program_options
 #CFLAGS = -I../include $(OPT) -Wall -std=c++11
 #LDFLAGS = -I../include $(OPT) -Wall -std=c++11 -L.

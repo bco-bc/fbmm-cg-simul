@@ -2,20 +2,24 @@
 #define SIMULATOR_FACADE_HPP
 
 #include "bco/cg/api/results.hpp"
+#include "bco/cg/cg.hpp"
 
 namespace bco {  
 
   /**
    * Simplified interface to simulator.
    */
-  struct SimulatorFacade {
+    class SimulatorFacade {
 
     /**
      * Performs a calculation.
      * @return Calculation results.
      */
-    Results compute();
-    
+    public:
+	Results compute();
+
+    private:
+	//std::shared_ptr<Simulator> simulator_;
   };
   
 }

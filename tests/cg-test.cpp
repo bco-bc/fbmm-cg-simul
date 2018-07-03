@@ -11,18 +11,20 @@ using namespace bco;
 
 int main(int argc, char** argv)
 {
-    std::ofstream outfile("test-results.txt");
+    std::cout << "Chromatography test" << std::endl;    
+
+    ptree config;
+    boost::property_tree::read_json("../tests/inputs.json", config);
     
-    std::cout << "Chromatography test no 1" << std::endl;
-    std::vector<double> coefs{0.25, 1.5, 5.0};
-    std::vector<double> fraction_vector = craigApparatus(50, 20, coefs);
+    Simulator* simulator = Simulator::make_simulator(0);
+    
+    std::vector<double> fraction_vector;
+
+    std::ofstream outfile("test-results.txt");
+    fraction_vector = simulator->simulate(config);
     for (auto elem : fraction_vector) {
-	std::cout << elem << ", ";
 	outfile << elem << ",";
     }
-    
-    std::cout << "\n";
     outfile << std::endl;
-
     outfile.close();
 }

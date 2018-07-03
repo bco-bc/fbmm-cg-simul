@@ -1,0 +1,7 @@
+{
+    "simulator" : "vanDeemter",
+    "nb_tubes" : 50,
+    "nb_cycles" : 10,
+    "distribution_coeffs" : [ 0.1, 1.0, 25.0, 50.0 ],
+    "response_factors" : [ 1.0, 1.0, 1.0, 1.0 ]
+}

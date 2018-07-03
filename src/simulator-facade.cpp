@@ -4,7 +4,6 @@ namespace bco {
 
     Results SimulatorFacade::compute()
     {
-	
 	return Results();
     }
 }
