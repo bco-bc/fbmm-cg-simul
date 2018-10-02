@@ -6,18 +6,18 @@
 namespace bco {
 
   // Forward declarations.
-  class SimulatorFacade;
+  class SimulatorFactory;
 
   /**
    * Provides access to various components.
    */
-    struct Registry {
+  struct RegistrySimulatorFactory {
 
     /**
      * Returns instance.
-     * @return SimulatorFacade.
+     * @return SimulatorFactory.
      */
-    static std::shared_ptr<SimulatorFacade> simulatorFacade();
+    static std::shared_ptr<SimulatorFactory> simulatorFactory();
   };
 }
 

@@ -1,8 +1,8 @@
 #ifndef SIMULATOR_FACADE_HPP
 #define SIMULATOR_FACADE_HPP
 
-#include "bco/cg/api/results.hpp"
-#include "bco/cg/cg.hpp"
+#include "bco/cg/results.hpp"
+#include "bco/cg/parameters.hpp"
 
 namespace bco {  
 
@@ -11,15 +11,15 @@ namespace bco {
    */
     class SimulatorFacade {
 
-    /**
+    /**!
      * Performs a calculation.
      * @return Calculation results.
      */
     public:
-	Results compute();
-
-    private:
-	//std::shared_ptr<Simulator> simulator_;
+	Results compute(const Parameters& parameters);
+	std::string getParameters(const std::string& name);
+	std::vector<std::pair<std::string, std::string> > getSimulatorList();
+	
   };
   
 }

@@ -3,22 +3,29 @@ VPATH = ../include/bco/cg \
         ../include/bco/cg/api/facade \
         ../include/bco/cg/api/rest \
         ../include/bco/cg/infrastructure \
+	../include/bco/cg/simulators \
         ../src \
         ../apps \
         ../tests \
 
 PREFIX = $(prefix)
 
-INCLUDE = cg.hpp \
-          simulator-facade.hpp simulator-resource.hpp root-resource.hpp results.hpp \
+INCLUDE = simulator-facade.hpp simulator-resource.hpp \
+          simulator-factory.hpp \
+	  abstract-simulator.hpp \
+	  distribution-model.hpp langmuir-model.hpp \
+	  root-resource.hpp results.hpp \
           registry.hpp
 
-SRC =     simulator-facade.cpp root-resource.cpp simulator-resource.cpp results.cpp \
-          registry.cpp cg.cpp
+SRC =     simulator-facade.cpp  simulator-resource.cpp \
+	  simulator-factory.cpp \
+	  distribution-model.cpp langmuir-model.cpp \
+          root-resource.cpp results.cpp \
+          registry.cpp
 
 APPS =	  cg-simulator.cpp
 
-TESTS = cg-test.cpp 
+TESTS =   cg-test.cpp 
 
 SOBJ = $(SRC:.cpp=.o)
 LOBJ = $(SRC:.cpp=.lo)
@@ -30,13 +37,13 @@ AEXE = $(APPS:.cpp=)
 CC = g++
 LT = libtool
 LNAME = bcocg
-OPT = -ggdb -pthread
+OPT = -O2 -ggdb -pthread
 #OPT = -O3 -pthread -DNDEBUG
 
 # For g++ >= 5.4
 CFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14
 LDFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14 -L.
-LIBS = -lm -l$(LNAME) -L/localdisk/local/lib/ -lcppcms -L/localdisk/local/lib/ -lbooster
+LIBS = -lm -l$(LNAME) -L/localdisk/local/lib -lcppcms -L/localdisk/local/lib -lbooster
 #LIBS = -lm -l$(LNAME) -lpthread -lboost_program_options
 #CFLAGS = -I../include $(OPT) -Wall -std=c++11
 #LDFLAGS = -I../include $(OPT) -Wall -std=c++11 -L.
@@ -51,10 +58,9 @@ LIBS = -lm -l$(LNAME) -L/localdisk/local/lib/ -lcppcms -L/localdisk/local/lib/ -
 	$(LT) --mode=link $(CC) $(LDFLAGS) $(LIBS) $< -o $@ -rpath $(PREFIX)/bin
 
 lib : $(SOBJ)
-	$(LT) --mode=link $(CC) $(CFLAGS) -o lib$(LNAME).la $(LOBJ) -rpath $(PREFIX)/lib
+	$(LT) --mode=link $(CC) $(CFLAGS) -o lib$(LNAME).la $(LOBJ) -rpath $(PREFIX)/lib 
 
 tests: $(TEXE)
-	./cg-test
 	echo "Done: tests"
 
 apps: $(AEXE)
@@ -63,16 +69,19 @@ apps: $(AEXE)
 all: lib tests apps
 	echo "Done: all"
 
-install-tests: tests
-	$(LT) --mode=install install $(TEXE) $(PREFIX)/bin
-
 install-lib: lib
+	echo "Installing libs"	
 	$(LT) --mode=install install lib$(LNAME).la $(PREFIX)/lib
 
-install-apps: apps 
+install-tests: tests
+	echo "Installing tests"
+	$(LT) --mode=install install $(TEXE) $(PREFIX)/bin
+
+install-apps: apps
+	echo "Installing apps"
 	$(LT) --mode=install install $(AEXE) $(PREFIX)/bin
 
-install: install-lib install-apps
+install: install-lib install-apps install-tests
 
 docs: $(INCLUDE)
 	cd ..;pwd;/usr/bin/doxygen Doxyfile;

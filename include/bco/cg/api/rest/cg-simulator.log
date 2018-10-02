@@ -1,0 +1,6 @@
+2018-09-27 15:49:30; cg-simulator, info: Listening to port 8088 (cg-simulator.cpp:23)
+2018-09-27 15:49:38; cppcms_http, info: GET /simulator (http_api.cpp:254)
+2018-09-27 15:49:38; SimulatorResource, info: Mapped to /simulator relative to root resource. (simulator-resource.cpp:22)
+2018-09-27 15:49:38; RootResource, info: Mapped to /cgs (root-resource.cpp:32)
+2018-09-27 15:49:41; cppcms_http, info: GET /simulator (http_api.cpp:254)
+2018-09-27 15:49:48; cppcms_http, info: GET /simulator/all (http_api.cpp:254)
