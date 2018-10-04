@@ -6,28 +6,37 @@
 
 namespace bco {
 
-  // Forward declarations.
-  class SimulatorFacade;
-
-  /**
-   * REST Resource for calculations at "/simulator" (relative to topmost application).
-   */
-  class SimulatorResource : public cppcms::application {
-  public:
-
-    SimulatorResource(cppcms::service &service,
-		      const std::shared_ptr<SimulatorFacade>& simulatorFacade);
+    // Forward declarations.
+    class SimulatorFacade;
 
     /**
-     * Completes a calculation.
+     * REST Resource for calculations at "/simulator" (relative to topmost application).
      */
-    void compute();
+    class SimulatorResource : public cppcms::application {
+    public:
 
-  private:
+	SimulatorResource(cppcms::service &service,
+			  const std::shared_ptr<SimulatorFacade>& simulatorFacade);
 
-    std::shared_ptr<SimulatorFacade> simulatorFacade_;
+	/**
+	 * Responds the list of simulator
+	 */
+	void getSimulators();
+
+	/**
+	 * Responds the parameters info of a selected simulator (by name) 
+	 */
+	void getParameters(std::string name);
+
+	/**
+	 * Completes a calculation.
+	 */
+	void compute(std::string name);
+
+    private:
+	std::shared_ptr<SimulatorFacade> simulatorFacade_;
     
-  };
+    };
 }
 
 #endif

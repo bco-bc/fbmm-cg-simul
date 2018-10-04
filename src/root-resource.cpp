@@ -21,8 +21,8 @@ namespace bco {
 
     std::shared_ptr<SimulatorFacade> simulatorFacade = Registry::simulatorFacade();
     attach(new SimulatorResource(service, simulatorFacade),  
-	   "simulator", "/simulator{1}",   // mapping  
-	   "/simulator(/(.*))?", 1);       // dispatching
+	   "simulator", "/simulators{1}",   // mapping  
+	   "/simulators(/(.*))?", 1);       // dispatching
 
     // default URL
     dispatcher().assign("", &RootResource::status, this);  

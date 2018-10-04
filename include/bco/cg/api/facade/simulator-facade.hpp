@@ -1,21 +1,25 @@
 #ifndef SIMULATOR_FACADE_HPP
 #define SIMULATOR_FACADE_HPP
 
-#include "bco/cg/api/results.hpp"
+#include "bco/cg/results.hpp"
+#include "bco/cg/parameters.hpp"
 
 namespace bco {  
 
   /**
    * Simplified interface to simulator.
    */
-  struct SimulatorFacade {
+    class SimulatorFacade {
 
-    /**
+    /**!
      * Performs a calculation.
      * @return Calculation results.
      */
-    Results compute();
-    
+    public:
+	Results compute(const Parameters& parameters);
+	std::string getParameters(const std::string& name);
+	std::vector<std::pair<std::string, std::string> > getSimulatorList();
+	
   };
   
 }
