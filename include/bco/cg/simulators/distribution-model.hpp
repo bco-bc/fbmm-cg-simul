@@ -34,16 +34,15 @@ namespace bco {
 
   static std::string params ="{\
     \"simulator\" : {				\
-	\"description\" : \" \",	        \
+	\"description\" : \" Distribution model: Based on the countercurrent extraction methods for liquid-liquid extraction. The distribution model mimics the design of the Craig Apparatus (Lyman C. Craig). It is a very crude model devised to illustrate the separation of substance with different distribution coefficients.\",	\
 	\"name\" : \"distribution\",		\
 	\"parameters\":[{			\
             \"name\": \"num_tubes\",			\
-            \"description\": \"Number of tubes (avoid more than 20 as \
-it need to calculate bionamial coefficient)\",		\
+            \"description\": \"Number of tubes (<100, binomial coefficient can be expensive)\",		\
             \"value\" : 20				\
 	},{						\
             \"name\" : \"num_cycles\",			\
-            \"description\": \"Number of cycles (Extraction and transfert)\", \
+            \"description\": \"Number of cycles (Extraction and transfert cycles)\", \
             \"value\": 10				\
 	}],						\
 	\"setup\": [\"distribution\"]			\

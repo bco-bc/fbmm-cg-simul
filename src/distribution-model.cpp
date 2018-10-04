@@ -33,47 +33,66 @@ namespace bco {
     Results DistributionModel::compute(const Parameters &parameters)
     {
 	// Gather parameters
-	int num_tubes /*= parameters.get<int>("simulator.parameters.num_tubes")*/;
-	int num_cycles /*= parameters.get<int>("simulator.parameters.num_cycles")*/;
-
+	int num_tubes;
+	int num_cycles;
+	std::vector<float> coeffs;
+	Results results;
+	
+	// Global simulator parameters
 	for (auto& param : parameters.get_child("simulator.parameters"))
 	{
 	    if (param.second.get<std::string>("name") == "num_cycles")
 	    {
-		num_cycles = param.second.get<float>("value");
+		num_cycles = param.second.get("value", 10); // default : num_cycles = 10
 		
 	    }
 	    if (param.second.get<std::string>("name") == "num_tubes")
 	    {
-		num_tubes = param.second.get<float>("value");
+		num_tubes = param.second.get("value", 20); // default : num_tubes = 20
 	    }
 	}
-
 	std::vector<std::pair<float, float> > output(num_tubes,
 						     std::pair<float,float>(0.0, 0.0));
+	// Compounds parameters setup
+	for (auto& compound : parameters.get_child("compounds"))
+	{
+	    coeffs.push_back(compound.second.get<float>("distribution"));
+	}
 	
-	for (int cycle; cycle < num_cycles; cycle++)
+	if (coeffs.empty())
+	{
+	    throw("No compounds distribution parameters");
+	    results.data = output;
+	    return results;
+	}
+
+	// Simulation loop
+	std::vector <std::vector<float> > fractionVector(coeffs.size(),
+							 std::vector<float>(num_tubes));	
+ 	for (int cycle; cycle < num_cycles; cycle++)
 	{
 	    for (int tube = 0; tube < num_tubes; tube++)
 	    {
 		float binome = this->binomialCoeff(cycle, tube);
-		for (auto& compound : parameters.get_child("compounds"))
-		{
-		
-		    float coeff = compound.second.get<float>("distribution");
-		    
-		    output.at(tube).first = tube;
-		    output.at(tube).second = roundf(binome*1000.0*pow(coeff, tube)/pow(coeff+1, cycle))/1000.0;
+		for (int i = 0; i < coeffs.size(); i++)
+		{	    
+		    fractionVector.at(i).at(tube) = roundf(binome*1000.0*pow(coeffs.at(i), tube)
+							   /pow(coeffs.at(i)+1, cycle))/1000.0;
 		}
 	    }
 	}
-	float sum = 0.0;
-	for (auto& tube : output)
+
+	// Summing different fractions
+	for (int tube = 0; tube < num_tubes; tube++)
 	{
-	    sum += tube.second;
+	    output.at(tube).first = tube;
+	    for (int compound = 0; compound < coeffs.size(); compound++)
+	    {
+		output.at(tube).second += fractionVector.at(compound).at(tube);
+	    }
 	}
-	std::cout << sum << std::endl;
-	Results results;
+	
+	// output in different sets
 	results.data = output;
 	return results;
     }

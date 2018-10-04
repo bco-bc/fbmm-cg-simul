@@ -19,12 +19,12 @@ namespace bco {
 			  const std::shared_ptr<SimulatorFacade>& simulatorFacade);
 
 	/**
-	 * Respond the list of simulator
+	 * Responds the list of simulator
 	 */
 	void getSimulators();
 
 	/**
-	 * Respond the parameters info of a selected simulator (by name) 
+	 * Responds the parameters info of a selected simulator (by name) 
 	 */
 	void getParameters(std::string name);
 
