@@ -1,25 +1,27 @@
 {
     "simulator" : {
 	"description" : "plop",
-	"name" : "langmuir",
+	"name" : "distribution",
 	"parameters":[{
-            "name": "num_plates",
-            "description": "Number of plates",
-            "value" : 50
+            "name": "num_tubes",
+            "description": "Number of tubes",
+            "value" : 20
 	},{
             "name" : "num_cycles",
             "description": "Number of cycles",
-            "value": 20
+            "value": 10
 	}],
 	"setup": ["distribution", "response"]
     },    
     "compounds" : [{
 	"description" : "I'm A",
 	"distribution" : 0.5,
+	"response" : 1.0
 	"name":"A"
-    },{
+    }, {
 	"description" : "I'm B",
-	"distribution": 3.5,
+	"distribution" : 0.5,
+	"response" : 1.0
 	"name":"B"
     }]
 }

@@ -17,7 +17,7 @@ INCLUDE = simulator-facade.hpp simulator-resource.hpp \
 	  root-resource.hpp results.hpp \
           registry.hpp
 
-SRC =     simulator-facade.cpp  simulator-resource.cpp \
+SRC =     simulator-facade.cpp simulator-resource.cpp \
 	  simulator-factory.cpp \
 	  distribution-model.cpp langmuir-model.cpp \
           root-resource.cpp results.cpp \
@@ -43,7 +43,8 @@ OPT = -O2 -ggdb -pthread
 # For g++ >= 5.4
 CFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14
 LDFLAGS = -I../include -I/localdisk/local/include $(OPT) -Wall -std=c++14 -L.
-LIBS = -lm -l$(LNAME) -L/localdisk/local/lib -lcppcms -L/localdisk/local/lib -lbooster
+LIBS = -lm -l$(LNAME) -lcppcms -lbooster
+#LIBS = -lm -l$(LNAME) -L/localdisk/local/lib -lcppcms -L/localdisk/local/lib -lbooster
 #LIBS = -lm -l$(LNAME) -lpthread -lboost_program_options
 #CFLAGS = -I../include $(OPT) -Wall -std=c++11
 #LDFLAGS = -I../include $(OPT) -Wall -std=c++11 -L.

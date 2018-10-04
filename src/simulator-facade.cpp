@@ -6,9 +6,8 @@ namespace bco {
 
     Results SimulatorFacade::compute(const Parameters& parameters)
     {
-	auto simulator = SimulatorFactory::Create(parameters.get("name", "NONAME"));
+	auto simulator = SimulatorFactory::Create(parameters.get("simulator.name", "distribution"));
 	Results results = simulator->compute(parameters);
-	results.name = parameters.get("name", "NONAME");
 	return results;
     }
 

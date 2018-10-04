@@ -21,8 +21,8 @@ namespace bco {
 
 	dispatcher().map("POST", "/(\\w+)", &SimulatorResource::compute, this, 1);
 	
-	mapper().root("/simulator");
-	BOOSTER_INFO("SimulatorResource") << "Mapped to /simulator relative to root resource.";
+	mapper().root("/simulators");
+	BOOSTER_INFO("SimulatorResource") << "Mapped to /simulators relative to root resource.";
     }
 
     void SimulatorResource::getSimulators()
@@ -33,7 +33,7 @@ namespace bco {
 	for (auto& elem : simulatorFacade_->getSimulatorList())
 	{
 	    simulator["name"] = elem.first;
-	    simulator["description"]= elem.second;
+	    simulator["description"] = elem.second;
 	    array.push_back(simulator);
 	}
 	
@@ -45,43 +45,47 @@ namespace bco {
     {
 
 	std::string stg = simulatorFacade_->getParameters(name);
-	cppcms::json::value json;
-	json["simulator"] = name;
-	json["compounds"] = "plop";
 	response().content_type("application/json");
 	response().out() << stg;
     }
     
     void SimulatorResource::compute(std::string name)
     {	
-	// Input part
+	// Request JSON
         std::pair<void *, size_t> post_data = request().raw_post_data();
 	std::stringstream ss(std::string(reinterpret_cast<char const *>(post_data.first),
 					  post_data.second));
-	cppcms::json::value inputs;
-	if (!inputs.load(ss, true))
+	// Loading JSON
+	cppcms::json::value json;
+	if (!json.load(ss, true))
 	{
 	    throw("Invalid JSON");
 	}
-	
+
+	// Convertion JSON to Parameters
 	Parameters parameters;
 	try {
 	    std::stringstream ss1;
-	    ss1 << inputs;
+	    ss1 << json;
 	    boost::property_tree::read_json(ss1, parameters);
 	}
 	catch(std::exception & e)
 	{
 	    throw("Could not read JSON");
 	}
+
+	if (name != parameters.get<std::string>("simulator.name"))
+	{
+	    throw("JSON simulator "+
+		  parameters.get<std::string>("simulator.name")
+		  +" does not match url name"+name);
+	}
 	
-	// Compute part
+	// Compute 
 	Results results = simulatorFacade_->compute(parameters);
 
-	cppcms::json::value json;
-	json["status"] = "success";
-	json["simulator"] = results.name;
-	json["data"] = results.toJson();
+	// Output JSON
+	json["results"] = results.toJson();
 	response().content_type("application/json");
 	response().out() << json;
     }

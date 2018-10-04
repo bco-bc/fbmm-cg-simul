@@ -9,10 +9,9 @@ namespace bco {
      * Holds results of a calculation carried out by simulator.
      */
     struct Results {
-	std::string name;
 	std::string xlabel = "Time";
 	std::string ylabel = "Concentration";
-	std::vector<double> data;
+	std::vector<std::pair<float, float>> data;
 	
 	/**
 	 * Returns JSON representation.
