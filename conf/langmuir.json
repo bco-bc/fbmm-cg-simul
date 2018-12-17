@@ -1,0 +1,27 @@
+{
+    "simulator" : {
+	"description" : "...",
+	"name" : "langmuir",
+	"parameters":[{
+            "name": "num_plates",
+            "description": "Number of plates",
+            "value" : 1000
+	},{
+            "name" : "num_cycles",
+            "description": "Number of cycles",
+            "value": 100
+	}],
+	"setup": ["distribution", "response"]
+    },    
+    "compounds" : [{
+	"description" : "I'm A",
+	"distribution" : 0.5,
+	"name":"A",
+	"response" : 1.0
+    }, {
+	"description" : "I'm B",
+	"distribution" : 3.5,
+	"name":"B",
+	"response" : 1.0
+    }]
+}

@@ -55,10 +55,10 @@ namespace bco {
         std::pair<void *, size_t> post_data = request().raw_post_data();
 	std::stringstream ss(std::string(reinterpret_cast<char const *>(post_data.first),
 					  post_data.second));
+
 	// Loading JSON
 	cppcms::json::value json;
-	if (!json.load(ss, true))
-	{
+	if (!json.load(ss, true)) {
 	    throw("Invalid JSON");
 	}
 
@@ -80,7 +80,7 @@ namespace bco {
 		  parameters.get<std::string>("simulator.name")
 		  +" does not match url name"+name);
 	}
-	
+
 	// Compute 
 	Results results = simulatorFacade_->compute(parameters);
 

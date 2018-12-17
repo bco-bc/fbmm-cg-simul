@@ -11,12 +11,11 @@
  * Biocenter Oulu
  */
 namespace bco {
-
+    
     /**
      * Simulator Info struct 
      */
-    struct SimulatorImplInfo
-    {
+    struct SimulatorImplInfo {
 	using CreateMethod = std::function<std::unique_ptr<AbstractSimulator>()>;
 	CreateMethod createFunc;
 	std::string description;
@@ -58,8 +57,7 @@ namespace bco {
 			     const std::string desc,
 			     const std::string params) {
 	    auto it = simulator_map.find(name);
-	    if (it == simulator_map.end())
-	    { 
+	    if (it == simulator_map.end()) { 
 	        simulator_map[name] = {[]() -> std::unique_ptr<AbstractSimulator> {
 						       return std::make_unique<T>();},
 				       desc,

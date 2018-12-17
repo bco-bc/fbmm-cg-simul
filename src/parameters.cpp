@@ -2,9 +2,4 @@
 
 namespace bco {
 
-    cppcms::json::value Parameters::toJson()
-    {
-	
-    }
-
 }

@@ -1,27 +1,25 @@
 {
     "simulator" : {
-	"description" : "plop",
+	"description" : "...",
 	"name" : "distribution",
 	"parameters":[{
             "name": "num_tubes",
             "description": "Number of tubes",
-            "value" : 20
+            "value" : 30
 	},{
             "name" : "num_cycles",
             "description": "Number of cycles",
-            "value": 10
+            "value": 20
 	}],
-	"setup": ["distribution", "response"]
+	"setup": ["distribution"]
     },    
     "compounds" : [{
 	"description" : "I'm A",
 	"distribution" : 0.5,
-	"response" : 1.0
 	"name":"A"
     }, {
 	"description" : "I'm B",
-	"distribution" : 0.5,
-	"response" : 1.0
+	"distribution" : 3.5,
 	"name":"B"
     }]
 }

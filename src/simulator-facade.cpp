@@ -19,8 +19,7 @@ namespace bco {
     std::vector<std::pair<std::string, std::string> > SimulatorFacade::getSimulatorList()
     {
 	std::vector<std::pair<std::string, std::string> > list;
-	for (auto& elem : SimulatorFactory::GetMap())
-	{
+	for (auto& elem : SimulatorFactory::GetMap()) {
 	    list.push_back(std::pair<std::string, std::string>(elem.first,
 							       elem.second.description));
 	}
